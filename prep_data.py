@@ -7,8 +7,17 @@ import os
 import sys
 
 
-def cleanText(trainFile):
-    toChars = True
+parser = argparse.ArgumentParser(description='Preparing corpus for Transformer Language Model')
+parser.add_argument('--split-type', type=str, default='word',
+                    choices=['word', '+morph+', '+char+', 'char'],
+                    help='How to split the corpus')
+parser.add_argument('--dataset', type=str, default='train',
+                    choices=['train', 'valid'],
+                    help='dataset name')
+args = parser.parse_args()
+
+
+def cleanText():
     trainFileName, file_ext = os.path.splitext(trainFile)
     if toChars:
         cleanedFileName = trainFileName + "_cleanedChars" + file_ext
@@ -36,8 +45,4 @@ def cleanText(trainFile):
 
             f_target.write(line + "\n")
 
-def main(trainFile):
-    cleanText(trainFile)
-
-if __name__ == '__main__':
-    main(sys.argv[1])
+cleanText()
