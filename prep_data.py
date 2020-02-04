@@ -32,10 +32,13 @@ def splitText(line):
         sentenceAsCharacters = []
         words = line.split()
         for word in words:
-            sentenceAsCharacters.append(word[0] + "+")
-            for letter in word[1:-1]:
-                sentenceAsCharacters.append("+" + letter + "+")
-            sentenceAsCharacters.append("+" + word[-1])
+            if len(word) == 1:
+                sentenceAsCharacters.append(word)
+            else:
+                sentenceAsCharacters.append(word[0] + "+")
+                for letter in word[1:-1]:
+                    sentenceAsCharacters.append("+" + letter + "+")
+                sentenceAsCharacters.append("+" + word[-1])
         line = " ".join(sentenceAsCharacters)
 
     elif args.split_type == '+morf+':
@@ -70,10 +73,13 @@ def cleanText():
             open(cleanedFileName, 'w', encoding='utf-8') as f_target:
         for line in f_source:
             line = line.lower()
+            # I Don't remember what this does.. removes certain characters?
             line = re.sub("[^a-zA-Z\x7f-\xff]", " ", line)
             line = re.sub(" +", " ", line)
             line = line.strip()
             if len(line) == 0:
+                line = "<UNK>"
+                f_target.write(line + "\n")
                 continue
 
             line = splitText(line)
