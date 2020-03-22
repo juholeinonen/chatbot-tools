@@ -1,0 +1,22 @@
+version: '2'
+
+networks:
+  app-tier:
+    driver: bridge
+services:
+  chat:
+    image: sdelements/lets-chat
+    networks:
+      - app-tier
+    ports:
+      - 8862:8080
+  mongo:
+    image: mongo:latest
+    networks:
+      - app-tier
+    volumes:
+      - mongodb:/data/db
+#      - mongodb_config:/data/configdb
+volumes:
+    mongodb:
+#    mongodb_config:
