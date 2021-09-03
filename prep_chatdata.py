@@ -110,7 +110,7 @@ def prepare_chat(arguments, morfessor_binary):
             f_target.write(dialog_round_number + ' ' + dialog_to_write + '\n')
 
 
-def main(arguments):
+def main(arguments, morfessor_binary):
     prepare_chat(arguments, morfessor_binary)
 
 
